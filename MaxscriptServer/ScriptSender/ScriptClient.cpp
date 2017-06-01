@@ -23,9 +23,9 @@ void ScriptClient::transfer()
 
 	socket->write(script.toUtf8()); //write the data 
 	socket->waitForReadyRead(3000);
-	QString res = QString(socket->readAll());
+	QString resp = QString(socket->readAll());
 	// we need to write to stdout to get output in our editor console
-	std::cout << res.toStdString() << endl;
+	std::cout << resp.toStdString() << endl;
 	socket->waitForDisconnected();
 	socket->close();
 	qApp->quit();
@@ -36,7 +36,6 @@ void ScriptClient::displayError(QAbstractSocket::SocketError socketError)
 {
 	if (socketError == QTcpSocket::RemoteHostClosedError)
 		return;
-	qInfo() << socket->errorString();
 	std::cout << endl << socket->errorString().toStdString() << endl;
 	socket->close();
 	qApp->quit();
